@@ -1,5 +1,7 @@
 const path = require('path');
 const webpack = require('webpack');
+const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
+const MiniCssExtractPlugin = require('mini-css-extract-plugin')
 // const merge = require('webpack-merge');
 // const HtmlWebpackPlugin = require('html-webpack-plugin');
 // const CopyWebpackPlugin = require('copy-webpack-plugin');
@@ -42,6 +44,22 @@ module.exports = {
           name: 'static/fonts/[name].[hash:7].[ext]',
         },
       },
+      {
+        test: /\.less$/,
+        use: [
+          MiniCssExtractPlugin.loader,
+          // 'style-loader', // creates style nodes from JS strings
+          'css-loader', // translates CSS into CommonJS
+          'less-loader', // compiles Less to CSS
+        ]
+      },
     ],
   },
+  plugins: [
+    new WebpackManifestPlugin(),
+    new MiniCssExtractPlugin({
+      filename: 'css/[name].[contenthash].min.css',
+      chunkFilename: 'css/[name].[contenthash].min.css'
+    }),
+  ]
 };
