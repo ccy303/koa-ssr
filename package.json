@@ -4,16 +4,16 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "webpack --config ./config/webpack.config.client.js",
+    "test": "webpack --watch --config ./config/webpack.config.client.js",
     "nodemon": "nodemon app.js"
   },
   "author": "",
   "license": "ISC",
   "dependencies": {
+    "ejs": "^3.1.6",
     "koa": "^2.13.1",
     "koa-router": "^10.0.0",
     "nodemon": "^2.0.7",
-    "pug": "^3.0.2",
     "react": "^17.0.2",
     "react-dom": "^17.0.2"
   },
@@ -21,8 +21,10 @@
     "@babel/core": "^7.14.3",
     "@babel/preset-env": "^7.14.2",
     "@babel/preset-react": "^7.13.13",
+    "assets-webpack-plugin": "^7.1.0",
     "babel-loader": "^8.2.2",
     "css-loader": "^5.2.5",
+    "file-loader": "^6.2.0",
     "less": "^4.1.1",
     "less-loader": "^9.0.0",
     "mini-css-extract-plugin": "^1.6.0",
