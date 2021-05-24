@@ -9,7 +9,10 @@ class Inject {
   }
 
   inject(html, name, locals = {}, options = {}) {
-    let headInject = `<link rel="stylesheet" href="${this.manifest[name.replace(/.js/, '')].css}">`;
+    const headInject = `<link rel="stylesheet" href="${this.manifest[name.replace(/.js/, '')].css}">`;
+    const scriptInject = [
+      `<script type="text/javascript" src="${}"></script>`
+    ];
     // scores.css
     // console.log(headInject);
     // if (deps) {
