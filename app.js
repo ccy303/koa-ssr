@@ -2,20 +2,23 @@ const Koa = require('koa');
 const path = require('path');
 const Router = require('koa-router');
 const ssrRender = require('./util/render');
-
+const koaStatic = require('koa-static');
 const router = new Router();
 const app = new Koa();
 
 router.get('/', async ctx => {
-  ctx.body = ctx.render('home');
+  ctx.body = ctx.render('home.js');
 });
 
 app
-  .use(ssrRender({
-    manifest: path.join(__dirname, 'dist/manifest.json'),
-  }))
+  .use(koaStatic('dist', {}))
+  .use(
+    ssrRender({
+      manifest: path.join(__dirname, 'dist/manifest.json'),
+    }),
+  )
   .use(router.routes());
 
-app.listen(8000, () => {
-  console.info(`server is runing at 8000`)
+app.listen(8888, () => {
+  console.info(`server is runing at 8888`);
 });

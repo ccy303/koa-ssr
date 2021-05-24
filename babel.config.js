@@ -1,16 +1,19 @@
-module.exports = (api) => {
+module.exports = api => {
   api.cache(true);
   const presets = [
-    "@babel/react",
-    ["@babel/env", {
-      "modules": false,
-      "useBuiltIns": 'usage',
-      "corejs": { version: 3, proposals: true }
-    }]
+    '@babel/react',
+    [
+      '@babel/preset-env',
+      {
+        modules: 'umd',
+        useBuiltIns: 'usage',
+        corejs: { version: 3, proposals: true },
+      },
+    ],
   ];
   const plugins = [
+    '@babel/plugin-transform-runtime',
     // "@babel/plugin-proposal-class-properties", // class的方法可以用箭头函数自动bind this
-    // "@babel/plugin-transform-runtime",
     // ["import", {
     //   libraryName: 'antd',
     //   libraryDirectory: 'es',
@@ -31,7 +34,6 @@ module.exports = (api) => {
 
   return {
     presets,
-    plugins
+    plugins,
   };
-
-}
+};

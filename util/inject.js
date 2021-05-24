@@ -1,6 +1,6 @@
 const ejs = require('ejs');
 const path = require('path');
-const fs = require('fs')
+const fs = require('fs');
 
 class Inject {
   constructor(config = {}) {
@@ -9,13 +9,9 @@ class Inject {
   }
 
   inject(html, name, locals = {}, options = {}) {
-    console.log(html)
-    console.log(name)
-    console.log(locals)
-    console.log(options)
-    console.log(this.manifest)
-    const deps = this.manifest[name];
-    console.log(deps)
+    let headInject = `<link rel="stylesheet" href="${this.manifest[name.replace(/.js/, '')].css}">`;
+    // scores.css
+    // console.log(headInject);
     // if (deps) {
     //   const headInject = [];
     //   const bodyInject = [];
@@ -54,12 +50,12 @@ class Inject {
     // if (this.config.afterRender) {
     //   return this.config.afterRender(html, locals);
     // }
-    const htmlTemp = fs.readFileSync(path.join(__dirname, './../index.ejs'), { encoding: "utf-8" });
+    const htmlTemp = fs.readFileSync(path.join(__dirname, './../index.ejs'), { encoding: 'utf-8' });
     return ejs.render(htmlTemp, {
       title: 'hahahah',
-      html: html
-    })
-    return html;
+      html: html,
+      styleLink: headInject,
+    });
   }
 }
 

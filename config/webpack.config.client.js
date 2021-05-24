@@ -8,18 +8,40 @@ const MiniCssExtractPlugin = require('mini-css-extract-plugin');
 // const HtmlWebpackPlugin = require('html-webpack-plugin');
 // const CopyWebpackPlugin = require('copy-webpack-plugin');
 
+const entryList = { home: path.resolve(__dirname, '../src/pages/home/index.js') };
+
 module.exports = {
-  entry: {
-    'home.js': path.resolve(__dirname, '../src/pages/home'),
-    // detail: path.resolve(__dirname, '../src/views/detail'),
+  entry: () => {
+    const entry = {};
+    for (const key in entryList) {
+      entry[key] = {
+        import: `${entryList[key]}`,
+        library: {
+          name: key,
+          type: 'umd',
+          umdNamedDefine: true,
+        },
+        // dependOn: 'react-vendors',
+      };
+    }
+    entry['hydrate'] = {
+      import: path.resolve(__dirname, '../util/hydrate.js'),
+      library: {
+        name: 'hydrate',
+        type: 'window',
+      },
+    };
+    return entry;
   },
   output: {
     publicPath: '/',
     path: path.resolve(__dirname, '../dist'),
     // filename: `static/js/[name].[${isProd ? 'chunkhash' : 'hash'}:8].js`,
     // filename: `[name].[chunkhash:8].js`,
-    filename: `js/[name].[contenthash].js`,
-    libraryTarget: 'commonjs',
+    filename: `js/[name].js`,
+    globalObject: 'this',
+    enabledLibraryTypes: ['umd', 'window'],
+    // libraryTarget: 'umd',
     // chunkFilename: 'static/js/[name].[chunkhash:8].js',
   },
   module: {
@@ -68,6 +90,6 @@ module.exports = {
         filename: 'css/[name].[contenthash].min.css',
         chunkFilename: 'css/[name].[contenthash].min.css',
       }),
-    ]
-  })()
+    ];
+  })(),
 };
