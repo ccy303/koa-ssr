@@ -7,7 +7,7 @@ const router = new Router();
 const app = new Koa();
 
 router.get('/', async ctx => {
-  ctx.body = ctx.render('home.js');
+  ctx.body = ctx.render('home.js', { a: "ccy", msg: "你好呀" });
 });
 
 app

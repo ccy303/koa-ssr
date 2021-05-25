@@ -1,16 +1,12 @@
 const path = require('path');
-const webpack = require('webpack');
-const fs = require('fs');
 const assetsWebpackPlugin = require('assets-webpack-plugin');
-const { WebpackManifestPlugin } = require('webpack-manifest-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-// const merge = require('webpack-merge');
-// const HtmlWebpackPlugin = require('html-webpack-plugin');
-// const CopyWebpackPlugin = require('copy-webpack-plugin');
-
+const ProgressBarPlugin = require('progress-bar-webpack-plugin')
+const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
 const entryList = { home: path.resolve(__dirname, '../src/pages/home/index.js') };
 
 module.exports = {
+  mode: 'development',
   entry: () => {
     const entry = {};
     for (const key in entryList) {
@@ -21,7 +17,6 @@ module.exports = {
           type: 'umd',
           umdNamedDefine: true,
         },
-        // dependOn: 'react-vendors',
       };
     }
     entry['hydrate'] = {
@@ -36,13 +31,9 @@ module.exports = {
   output: {
     publicPath: '/',
     path: path.resolve(__dirname, '../dist'),
-    // filename: `static/js/[name].[${isProd ? 'chunkhash' : 'hash'}:8].js`,
-    // filename: `[name].[chunkhash:8].js`,
     filename: `js/[name].js`,
     globalObject: 'this',
     enabledLibraryTypes: ['umd', 'window'],
-    // libraryTarget: 'umd',
-    // chunkFilename: 'static/js/[name].[chunkhash:8].js',
   },
   module: {
     rules: [
@@ -51,7 +42,9 @@ module.exports = {
         loader: 'babel-loader',
         exclude: /node_modules/,
         /* 指定src文件下的内容 */
-        include: path.join(__dirname, '../src'),
+        // include: [
+        //   path.join(__dirname, '../src'),
+        // ]
       },
       {
         test: /\.(png|jpe?g|gif|svg)$/,
@@ -80,8 +73,12 @@ module.exports = {
       },
     ],
   },
+  // optimization: {
+  //   minimizer: [new UglifyJsPlugin()]
+  // },
   plugins: (() => {
     return [
+      new ProgressBarPlugin(),
       new assetsWebpackPlugin({
         filename: 'manifest.json',
         path: path.join(__dirname, '../dist'),

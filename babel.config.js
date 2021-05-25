@@ -12,7 +12,8 @@ module.exports = api => {
     ],
   ];
   const plugins = [
-    '@babel/plugin-transform-runtime',
+    // '@babel/plugin-transform-runtime',
+    '@babel/plugin-syntax-dynamic-import'
     // "@babel/plugin-proposal-class-properties", // class的方法可以用箭头函数自动bind this
     // ["import", {
     //   libraryName: 'antd',

@@ -1,20 +1,21 @@
 <!DOCTYPE html>
 <html>
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="renderer" content="webkit" />
-    <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
-    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
-    <meta name="keyword" content="政采云,前端开发,前端,前端团队,前端周刊,前端小报,前端博客,前端技术,前端分享,前端培训,前端布道" />
-    <meta
-      name="description"
-      content="Zoo Weekly!，是政采云前端团队维护的前端技术文章周刊，每周更新一期，筛选推荐近一周内更值得阅读的前端技术文章。"
-    />
-    <%- styleLink %>
-    <title><%= title %></title>
-  </head>
 
-  <body>
-    <div id="root"><%- html %></div>
-  </body>
+<head>
+  <meta charset="UTF-8" />
+  <meta name="renderer" content="webkit" />
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1" />
+  <meta name="viewport"
+    content="width=device-width, initial-scale=1, maximum-scale=1, minimum-scale=1, user-scalable=no" />
+  <meta name="keyword" content="" />
+  <meta name="description" content="" />
+  <%- styleLink %>
+  <title><%= title %></title>
+</head>
+
+<body>
+  <div id="root"><%- html %></div>
+  <%- hydrate %>
+</body>
+
 </html>
