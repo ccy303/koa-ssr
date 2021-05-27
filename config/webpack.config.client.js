@@ -73,15 +73,21 @@ module.exports = {
       },
     ],
   },
-  // optimization: {
-  //   minimizer: [new UglifyJsPlugin()]
-  // },
+  optimization: {
+    splitChunks: {
+      name: false,
+      chunks: 'all',
+    },
+  },
   plugins: (() => {
     return [
       new ProgressBarPlugin(),
       new assetsWebpackPlugin({
         filename: 'manifest.json',
         path: path.join(__dirname, '../dist'),
+        entrypoints: true,
+        update: true,
+        manifestFirst: true,
       }),
       new MiniCssExtractPlugin({
         filename: 'css/[name].[contenthash].min.css',
