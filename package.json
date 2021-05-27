@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "webpack --watch --config ./config/webpack.config.client.js",
+    "test1": "webpack --watch --config ./config/webpack.config.server.js",
     "nodemon": "nodemon app.js"
   },
   "author": "",
@@ -30,6 +31,7 @@
     "core-js": "^3.12.1",
     "css-loader": "^5.2.5",
     "file-loader": "^6.2.0",
+    "isomorphic-style-loader": "^5.1.0",
     "less": "^4.1.1",
     "less-loader": "^9.0.0",
     "mini-css-extract-plugin": "^1.6.0",
@@ -38,6 +40,7 @@
     "uglifyjs-webpack-plugin": "^2.2.0",
     "url-loader": "^4.1.1",
     "webpack": "^5.37.1",
+    "webpack-bundle-analyzer": "^4.4.2",
     "webpack-cli": "^4.7.0",
     "webpack-manifest-plugin": "^3.1.1"
   }

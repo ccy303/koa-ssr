@@ -1,22 +1,25 @@
 const path = require('path');
 const assetsWebpackPlugin = require('assets-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const ProgressBarPlugin = require('progress-bar-webpack-plugin')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
-const entryList = { home: path.resolve(__dirname, '../src/pages/home/index.js') };
-
+const ProgressBarPlugin = require('progress-bar-webpack-plugin');
+const { BundleAnalyzerPlugin } = require('webpack-bundle-analyzer');
+const entryList = {
+  home: path.resolve(__dirname, '../src/pages/home/index.js'),
+  about: path.resolve(__dirname, '../src/pages/about/index.js'),
+};
 module.exports = {
   mode: 'development',
+  target: 'web',
   entry: () => {
     const entry = {};
     for (const key in entryList) {
       entry[key] = {
         import: `${entryList[key]}`,
-        library: {
-          name: key,
-          type: 'umd',
-          umdNamedDefine: true,
-        },
+        // library: {
+        //   name: key,
+        //   type: 'umd',
+        //   umdNamedDefine: true,
+        // },
       };
     }
     entry['hydrate'] = {
@@ -73,20 +76,34 @@ module.exports = {
       },
     ],
   },
-  // optimization: {
-  //   minimizer: [new UglifyJsPlugin()]
-  // },
+  optimization: {
+    // minimizer: [new UglifyJsPlugin()],
+    // runtimeChunk: true,
+    splitChunks: {
+      name: false,
+      chunks: 'all',
+    },
+  },
   plugins: (() => {
     return [
       new ProgressBarPlugin(),
+      // new WebpackManifestPlugin({
+      //   fileName: 'manifest1.json',
+      // }),
       new assetsWebpackPlugin({
         filename: 'manifest.json',
-        path: path.join(__dirname, '../dist'),
+        path: path.join(__dirname, '../build'),
+        entrypoints: true,
+        update: true,
+        manifestFirst: true,
       }),
       new MiniCssExtractPlugin({
-        filename: 'css/[name].[contenthash].min.css',
-        chunkFilename: 'css/[name].[contenthash].min.css',
+        // filename: 'css/[name].[contenthash].min.css',
+        // chunkFilename: 'css/[name].[contenthash].min.css',
+        filename: 'css/[name].min.css',
+        chunkFilename: 'css/[name].min.css',
       }),
+      // new BundleAnalyzerPlugin(),
     ];
   })(),
 };

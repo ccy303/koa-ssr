@@ -7,14 +7,18 @@ const router = new Router();
 const app = new Koa();
 
 router.get('/', async ctx => {
-  ctx.body = ctx.render('home.js', { a: "ccy", msg: "你好呀" });
+  ctx.body = ctx.render('home.js', { a: 'ccy', msg: '你好呀' });
+});
+
+router.get('/a', async ctx => {
+  ctx.body = ctx.renderClient('about.js', { a: 'ccy', msg: '你好呀' });
 });
 
 app
   .use(koaStatic('dist', {}))
   .use(
     ssrRender({
-      manifest: path.join(__dirname, 'dist/manifest.json'),
+      manifest: path.join(__dirname, 'build/manifest.json'),
     }),
   )
   .use(router.routes());

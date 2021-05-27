@@ -1,10 +1,10 @@
 import React from 'react';
-import { hydrate } from 'react-dom';
+import ReactDom from 'react-dom';
 
-export default (score, state) => {
-  const render = (App) => {
+export default (score, state, type = 'hydrate') => {
+  const render = App => {
     const root = document.getElementById('root');
-    hydrate(<App {...state} />, root);
+    ReactDom[type](<App {...state} />, root);
   };
-  render(score)
+  render(score);
 };

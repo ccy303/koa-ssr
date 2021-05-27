@@ -5,18 +5,19 @@ const Inject = require('./inject');
 module.exports = option => {
   const inject = new Inject(option);
   const Render = {
-    normalizeReactElement: reactElement => {
-      return reactElement && reactElement.default ? reactElement.default : reactElement;
-    },
     render: (name, locals = {}) => {
-      const reactElement = Render.normalizeReactElement(require(path.join(__dirname, '../dist/js', name)));
+      const reactElement = require(path.join(__dirname, '../build', name)).default;
       const element = React.createElement(reactElement, locals);
       const html = ReactDOMServer.renderToString(element);
       return inject.inject(html, name, locals);
     },
+    renderClient: (name, locals = {}) => {
+      return inject.renderCom(name, locals);
+    },
   };
   return async (ctx, next) => {
     ctx.render = Render.render;
+    ctx.renderClient = Render.renderClient;
     await next();
   };
 };

@@ -7,10 +7,9 @@ export default props => {
   };
   return (
     <div>
-      这是一个组件11
-      <p className='text' onClick={click}>
-        哈哈哈哈12
-      </p>
+      <button onClick={click}>点击事件</button>
+      这是一个组件111
+      <p className='text'>哈哈哈哈12</p>
     </div>
   );
 };
