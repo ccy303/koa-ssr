@@ -15,11 +15,11 @@ module.exports = {
     for (const key in entryList) {
       entry[key] = {
         import: `${entryList[key]}`,
-        // library: {
-        //   name: key,
-        //   type: 'umd',
-        //   umdNamedDefine: true,
-        // },
+        library: {
+          name: key,
+          type: 'umd',
+          umdNamedDefine: true,
+        },
       };
     }
     entry['hydrate'] = {
@@ -44,10 +44,6 @@ module.exports = {
         test: /\.(js|jsx|mjs)?$/,
         loader: 'babel-loader',
         exclude: /node_modules/,
-        /* 指定src文件下的内容 */
-        // include: [
-        //   path.join(__dirname, '../src'),
-        // ]
       },
       {
         test: /\.(png|jpe?g|gif|svg)$/,
