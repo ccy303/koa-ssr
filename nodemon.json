@@ -1,6 +1,9 @@
   {
     "watch": [
       "dist/",
-      "app.js"
+      "app.js",
+      "util/render.js",
+      "util/hydrate.js",
+      "util/inject.js"
     ]
   }

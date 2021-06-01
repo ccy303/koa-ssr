@@ -1,12 +1,12 @@
 const path = require('path');
 const assetsWebpackPlugin = require('assets-webpack-plugin');
 const MiniCssExtractPlugin = require('mini-css-extract-plugin');
-const ProgressBarPlugin = require('progress-bar-webpack-plugin')
-const UglifyJsPlugin = require('uglifyjs-webpack-plugin');
+const ProgressBarPlugin = require('progress-bar-webpack-plugin');
 const entryList = { home: path.resolve(__dirname, '../src/pages/home/index.js') };
 
 module.exports = {
   mode: 'development',
+  target: 'node',
   entry: () => {
     const entry = {};
     for (const key in entryList) {
@@ -41,10 +41,6 @@ module.exports = {
         test: /\.(js|jsx|mjs)?$/,
         loader: 'babel-loader',
         exclude: /node_modules/,
-        /* 指定src文件下的内容 */
-        // include: [
-        //   path.join(__dirname, '../src'),
-        // ]
       },
       {
         test: /\.(png|jpe?g|gif|svg)$/,
@@ -65,23 +61,25 @@ module.exports = {
       },
       {
         test: /\.less$/,
-        use: [
-          MiniCssExtractPlugin.loader,
-          'css-loader', // translates CSS into CommonJS
-          'less-loader', // compiles Less to CSS
-        ],
+        use: [MiniCssExtractPlugin.loader, 'css-loader', 'less-loader'],
       },
     ],
   },
-  // optimization: {
-  //   minimizer: [new UglifyJsPlugin()]
-  // },
+  optimization: {
+    splitChunks: {
+      name: false,
+      chunks: 'all',
+    },
+  },
   plugins: (() => {
     return [
       new ProgressBarPlugin(),
       new assetsWebpackPlugin({
         filename: 'manifest.json',
         path: path.join(__dirname, '../dist'),
+        entrypoints: true,
+        update: true,
+        manifestFirst: true,
       }),
       new MiniCssExtractPlugin({
         filename: 'css/[name].[contenthash].min.css',
