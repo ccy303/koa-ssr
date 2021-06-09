@@ -19,6 +19,7 @@ app
   )
   .use(router.routes());
 
+// 监听端口
 app.listen(8888, () => {
   console.info(`server is runing at 8888`);
 });
